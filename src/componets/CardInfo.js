@@ -4,7 +4,7 @@ import React from "react";
 
 export default function CardInfo({texto, valor, cor, icon}) {
  return(
-    <div className="w-1/4 h-32 rounded shadow-lg p-5">
+    <div className="w-1/4 h-32 bg-white rounded-lg shadow-md p-5">
         <div className="flex flex-row justify-between">
             <span className="roboto-thin">{texto} </span>
             {icon}

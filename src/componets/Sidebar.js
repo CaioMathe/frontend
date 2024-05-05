@@ -1,24 +1,29 @@
-import { MoreVertical, Equal, EqualNot } from "lucide-react"
-import { useContext, createContext, useState } from "react"
+import {  Equal, EqualNot } from "lucide-react"
+import { useContext, createContext, useState, useEffect } from "react"
+import {  useNavigate } from 'react-router-dom';
 
 const SidebarContext = createContext()
 
 export default function Sidebar({ children, setExpanded2 }) {
   const [expanded, setExpanded] = useState(true)
-
+  useEffect(()=>{
+    const meuBotao = document.getElementById('btn_toogle');
+    meuBotao.click();
+  }, [])
 
   const toggleExpanded = () => {
-    setExpanded(!expanded); // Inverte o valor de 'expanded'
+    setExpanded(!expanded); 
     setExpanded2(!expanded)
   };
 
 
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r rounded-r-md shadow-sm">
+      <nav className="h-full flex flex-col bg-white border-r rounded-r-md shadow-sm  ">
         <div className="p-4 pb-2 flex justify-between items-center">
           <span className={`rubik-ph ${expanded ? "w-32" : "hidden"}`}>DEBITUS</span>
           <button
+          id="btn_toogle"
             onClick={toggleExpanded}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
           >
@@ -26,39 +31,25 @@ export default function Sidebar({ children, setExpanded2 }) {
           </button>
         </div>
 
-        <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
-        </SidebarContext.Provider>
+          <SidebarContext.Provider value={{ expanded }}>
+            <ul className="flex-1 px-3 flex justify-center flex-col">{children}</ul>
+          </SidebarContext.Provider>
 
-        <div className="border-t flex p-3">
-          <img
-            src="https://ui-avatars.com/api/?name=Caio&background=c7d2fe&color=fff&bold=true"
-            alt=""
-            className="w-10 h-10 rounded-md"
-          />
-          <div
-            className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-          >
-            <div className="leading-4">
-              <h4 className="font-semibold">Caio</h4>
-              <span className="text-xs text-gray-600">Caio@gmail.com</span>
-            </div>
-            <MoreVertical size={20} />
-          </div>
-        </div>
+   
       </nav>
     </aside>
   )
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, active, alert, navi }) {
   const { expanded } = useContext(SidebarContext)
+  const navigate = useNavigate();
+
+
   
   return (
     <li
+    onClick={() => navigate(navi)}
       className={`
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer

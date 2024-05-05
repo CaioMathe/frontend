@@ -20,8 +20,9 @@ export default function Login() {
 
         await api.post('/token/', user, { headers: { 'Content-Type': 'application/json' } })
         .then((e) => {   
-            navigate('/')
             localStorage.setItem('token_debitus', e.data.access);
+            navigate('/')
+            window.location.reload();
         }).catch((error)=>{
 
             console.log(error)
